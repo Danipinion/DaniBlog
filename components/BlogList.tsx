@@ -16,7 +16,7 @@ const BlogList = ({ posts }: Props) => {
       <input type="text" onChange={(e)=> setSearch(e.target.value)} placeholder="Search" className="w-full focus:border-none focus:outline-none pr-10"/>
       <hr className="border-[#0060ff] mb-5" />
       <div className="grid grid-cols-1 md:grid-cols-2 px-1 gap-10 gap-y-8 pb-18">
-        {posts.filter((post) => post.title.includes(search)).map((post) =>(
+        {posts.filter((post) => post.title.toLocaleUpperCase().includes(search.toLocaleUpperCase())).map((post) =>(
           <ClientSideRoute key={post._id} route={`/post/${post.slug.current}`}>
           <div  className="group cursor-pointer flex flex-col">
             <div className="realative w-full h-80 drop-shadow-xl group-hover:scale-105 transition-transform duration-200 ease-out">
