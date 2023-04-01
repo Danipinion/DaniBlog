@@ -4,6 +4,7 @@ import groq from "groq";
 import Image from "next/image";
 import { PortableText } from "@portabletext/react";
 import { RichTextComponents } from "@/components/RichTextComponents";
+import Link from "next/link";
 
 type Props = {
   params: {
@@ -39,8 +40,8 @@ async function Post({ params: { slug } }: Props) {
   const post: Post = await client.fetch(query, { slug });
 
   return (
-    <article className="px-10 pb-28">
-      <section className="space-y-2 border border-[#0060ff] text-white">
+    <article className="px-2 sm:px-10 pb-28 h-[1000px]">
+      <section className="space-y-2 border border-[#0060ff] text-white rounded-md">
         <div className="relative min-h-56 flex flex-col md:flex-row justify-between">
           <div className="absolute top-0 w-full h-full opacity-10 blur-sm p-10">
             <Image
@@ -50,7 +51,7 @@ async function Post({ params: { slug } }: Props) {
               fill
             />
           </div>
-          <section className="p-5 bg-[#0060ff] w-full">
+          <section className="p-5 bg-[#0060ff] w-full rounded-md">
             <div className="flex flex-col md:flex-row justify-between gap-y-5">
               <div>
                 <p className=" text-4xl font-extrabold">{post.title}</p>
@@ -87,8 +88,12 @@ async function Post({ params: { slug } }: Props) {
           </section>
         </div>
       </section>
-
-      <PortableText value={post.body} components={RichTextComponents}/>
+      <div className="my-5">
+        <PortableText value={post.body} components={RichTextComponents}/>
+      </div>
+      <div>
+        <Link href="/" className="bg-[#0060ff] px-5 py-2 rounded-sm text-xl text-white font-bold">Back</Link>
+      </div>
     </article>
   );
 }

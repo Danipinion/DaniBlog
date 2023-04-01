@@ -10,15 +10,15 @@ type Props = {
 const BlogList = ({ posts }: Props) => {
   return (
     <div>
-      <hr className="border-[#0060ff] mb-10" />
-      <div className="grid grid-cols-1 md:grid-cols-2 px-1 gap-10 gap-y-16 pb-18">
+      <hr className="border-[#0060ff] mb-5" />
+      <div className="grid grid-cols-1 md:grid-cols-2 px-1 gap-10 gap-y-8 pb-18">
         {posts.map((post) => (
           <ClientSideRoute key={post._id} route={`/post/${post.slug.current}`}>
             <div  className="group cursor-pointer flex flex-col">
               <div className="realative w-full h-80 drop-shadow-xl group-hover:scale-105 transition-transform duration-200 ease-out">
                 <Image
                   src={urlFor(post.mainImage).url()} 
-                  className="object-cover object-left lg:object-center"
+                  className="object-fill object-left lg:object-center"
                   alt={post.author.name}
                   fill
                 />
