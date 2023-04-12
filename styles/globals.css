@@ -15,4 +15,21 @@
     box-shadow: 1px 1px 0px 1px rgba(0, 0, 0, 1);
     @apply transition-all;
   }
+  .load {
+    height: 150px;
+    width: 150px;
+    stroke: white;
+    fill-opacity: 0;
+    stroke-width: 10px;
+    stroke-dasharray: 4500;
+    animation: draw 8s ease;
+  }
+  @keyframes draw {
+    0% {
+      stroke-dashoffset: 4500;
+    }
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
 }

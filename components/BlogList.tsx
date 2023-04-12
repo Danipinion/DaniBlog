@@ -1,64 +1,89 @@
-'use client'
-import urlFor from "@/lib/urlFor";
-import { ArrowUpRightIcon } from "@heroicons/react/24/solid";
-import Image from "next/image";
+"use client";
 import ClientSideRoute from "./ClientSideRoute";
 import { useState } from "react";
+import { Tags } from "./Tags";
+import Loading from "./Loading";
 
 type Props = {
   posts: Post[];
 };
 
 const BlogList = ({ posts }: Props) => {
-  const [search, setSearch] = useState("")
+  const [search, setSearch] = useState("");
+  const [tags, setTags] = useState("");
+
   return (
-    <div>
-      <input type="text" onChange={(e)=> setSearch(e.target.value)} placeholder="Search" className="w-full focus:border-none focus:outline-none pr-10"/>
-      <hr className="border-[#0060ff] mb-5" />
-      <div className="grid grid-cols-1 md:grid-cols-2 px-1 gap-10 gap-y-8 pb-18">
-        {posts.filter((post) => post.title.toLocaleUpperCase().includes(search.toLocaleUpperCase())).map((post) =>(
-          <ClientSideRoute key={post._id} route={`/post/${post.slug.current}`}>
-          <div  className="group cursor-pointer flex flex-col">
-            <div className="realative w-full h-80 drop-shadow-xl group-hover:scale-105 transition-transform duration-200 ease-out">
-              <Image
-                src={urlFor(post.mainImage).url()} 
-                className="object-fill object-left lg:object-center"
-                alt={post.author.name}
-                fill
-              />
-              <div className="absolute bottom-0 w-full bg-opacity-20 bg-black backdrop-blur-lg rounded drop-shadow-lg text-white p-5 flex justify-between">
-                <div>
-                    <p className="font-bold">{post.title}</p>
-                    <p>
-                        {new Date(post._createdAt).toLocaleDateString("en-US",{
-                            day: "numeric",
-                            month: "long",
-                            year: "numeric"
-                        })}
-                    </p>
-                </div>
-                <div className="flex flex-col sm:flex-row gap-y-2 md:gap-x-2 items-center">
-                    {post.categories.map((category,index)=>(
-                        <div key={index} className="bg-[#0060ff] text-center text-white px-3 py-1 rounded-full text-sm font-semibold">
-                            <p>{category.title}</p>
-                        </div>
+    <div className="p-5 sm:px-0">
+      <Loading />
+      <div className="relative shadow block  w-full mb-2 rounded-md">
+        <input
+          type="text"
+          placeholder="search"
+          className="w-full h-10 rounded-md border-gray-200 pl-2 shadow-sm sm:text-md"
+          onChange={(e) => setSearch(e.target.value)}
+          value={search}
+        />
+
+        <span className="absolute inset-y-0 right-0  w-10">
+          <button className="rounded-full bg-sky-600 p-5 h-10  text-red hover:bg-sky-700 ">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+              className="fill-white -mt-2"
+            >
+              <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
+            </svg>
+            <h1 className="opacity-0">h1</h1>
+          </button>
+        </span>
+      </div>
+      <Tags setTags={setTags} categories={posts} tagse={tags} />
+      <div className="w-full flex justify-center flex-wrap py-5">
+        {posts
+          .filter(
+            (post) =>
+              post.title
+                .toLocaleUpperCase()
+                .includes(search.toLocaleUpperCase()) &&
+              post.categories[0].title
+                .toLowerCase()
+                .includes(tags.toLowerCase())
+          )
+          .map((post) => (
+            <ClientSideRoute
+              key={post._id}
+              route={`/post/${post.slug.current}`}
+            >
+              <div className="rounded-xl p-0.5 m-2 shadow-xl transition border-2 border-sky-300 w-[400px] h-[150px] max-w-xs lg:max-w-md overflow-hidden">
+                <div className="rounded-[10px] bg-white p-4 !pt-5 sm:p-6">
+                  <p className="block text-xs text-gray-500">
+                    {new Date(post._createdAt).toLocaleDateString("en-US", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </p>
+
+                  <div>
+                    <h3 className="mt-0.5 text-lg font-medium text-gray-900">
+                      {post.title}
+                    </h3>
+                  </div>
+
+                  <div className="mt-4 flex flex-wrap gap-1">
+                    {post.categories.map((category, index) => (
+                      <span
+                        key={index}
+                        className="whitespace-nowrap rounded-full bg-sky-100 px-2.5 py-0.5 text-xs text-sky-600"
+                      >
+                        {category.title}
+                      </span>
                     ))}
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <div className="mt-5 flex-1">
-                <p className="underline text-lg font-bold">{post.title}</p>
-                <p className="line-clamp-2 text-gray-500">{post.description}</p>
-            </div>
-
-            <p className="mt-2 font-bold flex items-center group-hover:underline ">
-              Read Post
-              <ArrowUpRightIcon className="ml-2 h-4 w-4"/>
-            </p>
-          </div>
-        </ClientSideRoute>
-        ))}
+            </ClientSideRoute>
+          ))}
       </div>
     </div>
   );

@@ -1,24 +1,22 @@
-import Header from "@/components/Header"
-import "../../styles/globals.css"
-import Banner from "@/components/Banner"
+import Header from "@/components/Header";
+import "../../styles/globals.css";
 
 export const metadata = {
-  title: 'Homepage',
-  description: 'Blog for post config Mikrotik, Linux, and Cisco Packet tracer',
-}
+  title: "Homepage",
+  description: "Blog for post config Mikrotik, Linux, and Cisco Packet tracer",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
-      <body className="p-0 sm:p-10 sm:max-w-6xl mx-auto">
-        <Header/>
-        <Banner/>
+      <body className="px-2 sm:p-10 sm:max-w-6xl mx-auto">
+        <Header />
         {children}
       </body>
     </html>
-  )
+  );
 }

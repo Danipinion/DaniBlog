@@ -1,21 +1,32 @@
 import Image from "next/image";
 import Link from "next/link";
+import logo from "../public/logo.jpg";
 
 const Header = () => {
   return (
-    <header className="flex items-center justify-between space-x-2 font-bold px-5 py-2">
-      <Link href='/' className="flex items-center space-x-2">
-        <Image
-          src="https://cdn.freelogodesign.org/files/559d9fa0aad14b8cb8e2993cd1da143a/thumb/logo_200x200.png?v=0"
-          width={50}
-          height={50}
-          className="rounded-full"
-          alt="logo"
-        />
-        <h1>DANBLOG</h1>
-      </Link>
-      <div>
-        <Link href="https://danipinion.vercel.app" className="px-5 py-3 text-sm md:text-base hover:bg-gray-900 text-[#0060ff] hover:text-white transition-all duration-200 flex items-center rounded-full text-center"> See my portofolio</Link>
+    <header className="bg-white">
+      <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
+          <div className=" ">
+            <Link className="flex justify-center items-center gap-3" href="/">
+              <Image src={logo} alt="logo" className="w-10 h-10 rounded-full" />
+              <p className="font-bold text-xl">Danipinion</p>
+            </Link>
+          </div>
+
+          <div className="flex md:items-center gap-3 md:gap-12">
+            <div className="flex items-center gap-4">
+              <div className="sm:flex sm:gap-4">
+                <Link
+                  className="rounded-md bg-gray-100  text-sky-600 hover:bg-sky-600 px-5 py-2.5 text-sm font-medium hover:text-white shadow transition-all duration-200"
+                  href="https://danipinion.vercel.app"
+                >
+                  Porto
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </header>
   );
